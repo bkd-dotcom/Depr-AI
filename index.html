@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Website</title>
+    <style>
+        /* General Body Styling */
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+
+        /* Styling for Containers */
+        .container {
+            background: linear-gradient(145deg, #d0f0c0, #fddde6, #c7eaff);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+
+        h2, p {
+            color: #4a4a4a;
+        }
+
+
+        /* Input Field Styling */
+        .input-field {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #fff;
+        }
+
+
+        /* Button Styling */
+        .button {
+            background-color: #80c080;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+
+        .button:hover {
+            background-color: #6fa06f;
+        }
+
+
+        /* Left-aligned elements */
+        .question, .options {
+            text-align: left;
+        }
+
+
+        /* Hidden Elements */
+        .hidden {
+            display: none;
+        }
+
+
+        /* Quiz Page Styling */
+        .slide {
+            display: none;
+        }
+
+
+        .active-slide {
+            display: block;
+        }
+
+
+        /* Toggle Link Styling */
+        .toggle-link {
+            color: #007bff;
+            cursor: pointer;
+        }
+
+
+        /* Textarea Styling */
+        .textarea-field {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            height: 100px;
+            resize: none;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login/Sign Up Page -->
+    <div class="container" id="loginPage">
+        <h2 id="loginSignupHeader">Login or Sign Up</h2>
+        <input type="email" id="email" class="input-field" placeholder="Enter your email">
+        <input type="password" id="password" class="input-field" placeholder="Enter your password">
+        <input type="password" id="confirmPassword" class="input-field hidden" placeholder="Confirm your password">
+        <button class="button" onclick="loginOrSignup()">Login</button>
+        <p id="toggleText">Don't have an account? <span class="toggle-link" onclick="toggleLoginSignup()">Sign Up</span></p>
+        <p id="loginMessage"></p>
+    </div>
+
+
+    <!-- Intro Page -->
+    <div class="container hidden" id="introPage">
+        <h2>Welcome to the Mental Health Quiz</h2>
+        <p>We are here to help you identify symptoms of depression. The following quiz may provide insights into your mental health condition.</p>
+        <button class="button" onclick="startQuiz()">Take the Quiz</button>
+    </div>
+
+
+    <!-- Quiz Page -->
+    <div class="container hidden" id="quizPage">
+        <h2>Depression Detection Quiz</h2>
+        <form id="quizForm">
+            <!-- Slide 1 -->
+            <div class="slide active-slide">
+                <div class="question">Q1. What is your age?</div>
+                <div class="options">
+                    <input type="radio" name="age" value="0"> Under 18<br>
+                    <input type="radio" name="age" value="1"> 18-24<br>
+                    <input type="radio" name="age" value="2"> 25-34<br>
+                    <input type="radio" name="age" value="3"> 35 and above
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="slide">
+                <div class="question">Q2. What is your gender?</div>
+                <div class="options">
+                    <input type="radio" name="gender" value="0"> Male<br>
+                    <input type="radio" name="gender" value="1"> Female<br>
+                    <input type="radio" name="gender" value="2"> Non-binary<br>
+                    <input type="radio" name="gender" value="3"> Prefer not to say
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="slide">
+                <div class="question">Q3. How many hours do you sleep on average per night?</div>
+                <div class="options">
+                    <input type="radio" name="sleep" value="2"> Less than 6 hours<br>
+                    <input type="radio" name="sleep" value="1"> 6-8 hours<br>
+                    <input type="radio" name="sleep" value="0"> More than 8 hours
+                </div>
+            </div>
+            <!-- Slide 4 -->
+            <div class="slide">
+                <div class="question">Q4. How often do you exercise?</div>
+                <div class="options">
+                    <input type="radio" name="exercise" value="2"> Rarely or never<br>
+                    <input type="radio" name="exercise" value="1"> Once a week<br>
+                    <input type="radio" name="exercise" value="0"> More than once a week
+                </div>
+            </div>
+            <!-- Slide 5 -->
+            <div class="slide">
+                <div class="question">Q5. Over the last two weeks, how often have you felt little interest or pleasure in doing things?</div>
+                <div class="options">
+                    <input type="radio" name="interest" value="0"> Not at all<br>
+                    <input type="radio" name="interest" value="1"> Several days<br>
+                    <input type="radio" name="interest" value="2"> Nearly every day
+                </div>
+            </div>
+            <!-- Slide 6 -->
+            <div class="slide">
+                <div class="question">Q6. How often have you felt down, depressed, or hopeless?</div>
+                <div class="options">
+                    <input type="radio" name="depressed" value="0"> Not at all<br>
+                    <input type="radio" name="depressed" value="1"> Several days<br>
+                    <input type="radio" name="depressed" value="2"> Nearly every day
+                </div>
+            </div>
+            <!-- Slide 7 -->
+            <div class="slide">
+                <div class="question">Q7. How often have you had trouble falling asleep or staying asleep?</div>
+                <div class="options">
+                    <input type="radio" name="sleepIssues" value="0"> Not at all<br>
+                    <input type="radio" name="sleepIssues" value="1"> Several days<br>
+                    <input type="radio" name="sleepIssues" value="2"> Nearly every day
+                </div>
+            </div>
+            <!-- Slide 8 -->
+            <div class="slide">
+                <div class="question">Q8. How often have you felt tired or had little energy?</div>
+                <div class="options">
+                    <input type="radio" name="energy" value="0"> Not at all<br>
+                    <input type="radio" name="energy" value="1"> Several days<br>
+                    <input type="radio" name="energy" value="2"> Nearly every day
+                </div>
+            </div>
+            <!-- Slide 9 -->
+            <div class="slide">
+                <div class="question">Q9. How often have you had trouble concentrating on things?</div>
+                <div class="options">
+                    <input type="radio" name="concentration" value="0"> Not at all<br>
+                    <input type="radio" name="concentration" value="1"> Several days<br>
+                    <input type="radio" name="concentration" value="2"> Nearly every day
+                </div>
+            </div>
+            <!-- Slide 10 -->
+            <div class="slide">
+                <div class="question">Q10. How often have you had thoughts of harming yourself?</div>
+                <div class="options">
+                    <input type="radio" name="selfHarm" value="0"> Not at all<br>
+                    <input type="radio" name="selfHarm" value="1"> Several days<br>
+                    <input type="radio" name="selfHarm" value="2"> Nearly every day
+                </div>
+            </div>
+            <!-- Slide 11 - Paragraph Question -->
+            <div class="slide">
+                <div class="question">Q11. Is there anything else you would like to share about how you're feeling?</div>
+                <textarea name="additionalInfo" class="textarea-field"></textarea>
+            </div>
+        </form>
+        <button class="button" onclick="previousSlide()">Previous</button>
+        <button class="button" onclick="nextSlide()">Next</button>
+    </div>
+
+
+    <!-- Results Page -->
+    <div class="container hidden" id="resultPage">
+        <h2>Your Mental Health Insights</h2>
+        <p id="resultMessage"></p>
+        <p>For further assistance, we recommend contacting a mental health professional.</p>
+        <button class="button" onclick="goToHomePage()">Take Speech Test</button>
+    </div>
+
+
+    <script>
+        // Variables for managing slides
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+
+        // Toggle between login and signup
+        function toggleLoginSignup() {
+            const confirmPassword = document.getElementById('confirmPassword');
+            const loginSignupHeader = document.getElementById('loginSignupHeader');
+            const toggleText = document.getElementById('toggleText');
+            const loginButton = document.querySelector('.button');
+
+
+            if (confirmPassword.classList.contains('hidden')) {
+                confirmPassword.classList.remove('hidden');
+                loginSignupHeader.textContent = 'Sign Up';
+                toggleText.innerHTML = 'Already have an account? <span class="toggle-link" onclick="toggleLoginSignup()">Login</span>';
+                loginButton.textContent = 'Sign Up';
+            } else {
+                confirmPassword.classList.add('hidden');
+                loginSignupHeader.textContent = 'Login';
+                toggleText.innerHTML = "Don't have an account? <span class='toggle-link' onclick='toggleLoginSignup()'>Sign Up</span>";
+                loginButton.textContent = 'Login';
+            }
+        }
+
+
+        // Login or sign up functionality
+        function loginOrSignup() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword');
+            const loginMessage = document.getElementById('loginMessage');
+
+
+            if (email === '' || password === '') {
+                loginMessage.textContent = 'Please fill out all fields.';
+                loginMessage.style.color = 'red';
+                return;
+            }
+
+
+            if (!confirmPassword.classList.contains('hidden') && confirmPassword.value !== password) {
+                loginMessage.textContent = 'Passwords do not match.';
+                loginMessage.style.color = 'red';
+                return;
+            }
+
+
+            loginMessage.textContent = 'Login successful!';
+            loginMessage.style.color = 'green';
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('introPage').classList.remove('hidden');
+        }
+
+
+        // Start the quiz
+        function startQuiz() {
+            document.getElementById('introPage').classList.add('hidden');
+            document.getElementById('quizPage').classList.remove('hidden');
+        }
+
+
+        // Slide navigation functions
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active-slide');
+            slides[n].classList.add('active-slide');
+            currentSlide = n;
+        }
+
+
+        function nextSlide() {
+            if (!validateSlide(currentSlide)) {
+                return;
+            }
+            if (currentSlide < slides.length - 1) {
+                showSlide(currentSlide + 1);
+            } else {
+                showResults();
+            }
+        }
+
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+
+        // Slide validation to ensure an option is selected
+        function validateSlide(slideIndex) {
+            const inputs = slides[slideIndex].querySelectorAll('input[type="radio"]');
+            const nameSet = new Set(); // Track the unique question groups
+
+
+            for (let input of inputs) {
+                nameSet.add(input.name);
+            }
+
+
+            // Loop through each question group and ensure one radio button is checked
+            for (let name of nameSet) {
+                const selected = document.querySelector(`input[name="${name}"]:checked`);
+                if (!selected && name !== "additionalInfo") {
+                    alert('Please answer all questions on this slide.');
+                    return false;
+                }
+            }
+
+
+            return true;
+        }
+
+
+        // Show results after quiz completion
+        function showResults() {
+            let totalScore = 0;
+            const form = document.getElementById('quizForm');
+            const formData = new FormData(form);
+
+
+            for (let value of formData.values()) {
+                if (!isNaN(value)) {
+                    totalScore += parseInt(value);
+                }
+            }
+
+
+            document.getElementById('quizPage').classList.add('hidden');
+            document.getElementById('resultPage').classList.remove('hidden');
+
+
+            let resultMessage = '';
+            if (totalScore <= 5) {
+                resultMessage = 'You are likely not experiencing depression.';
+            } else if (totalScore <= 15) {
+                resultMessage = 'You may be experiencing mild symptoms of depression.';
+            } else {
+                resultMessage = 'You may be experiencing moderate to severe symptoms of depression.';
+            }
+
+
+            document.getElementById('resultMessage').textContent = resultMessage;
+
+            function goToHomePage() {
+        window.location.href = "http://127.0.0.1:5500/index.html"; // Full URL to your home page
+    }
+        }
+    </script>
+</body>
+</html>
