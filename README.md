@@ -18,7 +18,7 @@
     <li><strong>User Interaction</strong>: Upon registration, users are asked 10 questions related to their mood and activities over the past week to help build a context for the detection model.</li>
     <li><strong>Datasets</strong>: The model is trained on the Kaggle Depression Audio Dataset and data from Hugging Face.</li>
 </ul>
-
+<h3>The website is : https://deprai.teleporthq.app</h3>
 <h2>Installation</h2>
 <p>To get started with Depr AI, clone the repository and install the required dependencies.</p>
 
@@ -49,7 +49,6 @@ pip install -r requirements.txt
 </ol>
 
 <p>Make sure you download and preprocess the datasets before running the model.</p>
-
 <h2>Usage</h2>
 <ol>
     <li>Clone the repository.</li>
